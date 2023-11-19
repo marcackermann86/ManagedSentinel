@@ -11,10 +11,10 @@ stages:
     displayName: 'Deploying to Customer environment'
     jobs:
       - template: Pipelines/OnboardCustomer.yml
-			parameters:
-				CustomerName: Customer1
-				HostingNumber: '123456'
-				WorkspaceName: 'H123456-dev
-				ResourceGroupName: 'H123456-rg'
-				ResourceGroupLocation: 'eastus'
-				ServiceConnectionName: 'ARM Sub 1
+		parameters:
+			CustomerName: Customer1
+			HostingNumber: '123456'
+			WorkspaceName: 'H123456-dev
+			ResourceGroupName: 'H123456-rg'
+			ResourceGroupLocation: 'eastus'
+			ServiceConnectionName: 'ARM Sub 1
