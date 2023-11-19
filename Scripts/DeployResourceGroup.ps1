@@ -9,3 +9,6 @@ $rg = Get-AzResourceGroup -ResourceGroupName $Name -ErrorAction SilentlyContinue
 if ($null -eq $rg) {
     New-AzResourceGroup -Name $Name -Location $Location -Tag $Tag
 }
+else {
+    Write-Host "Resource group $Name already exists."
+}
