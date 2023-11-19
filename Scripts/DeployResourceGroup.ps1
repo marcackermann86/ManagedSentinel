@@ -2,11 +2,6 @@ param (
     [Parameter(Mandatory=$true)]$OnboardingFile
 )
 
-#Adding AzSentinel module
-Uninstall-AzureRm
-Install-Module AzSentinelTools -Scope CurrentUser -AllowClobber -Force
-Import-Module AzSentinelTools
-
 $artifactName = "OnboardingFile"
 
 #Build the full path for the onboarding file
