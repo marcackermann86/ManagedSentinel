@@ -55,7 +55,7 @@ stages:
         displayName: 'Install Sentinel'
         inputs:
          azureSubscription: 'ARM Sub 1'
-         ScriptPath: '$(Pipeline.Workspace)/Scripts/InstallSentinel.ps1'
+         ScriptPath: '$(Pipeline.Workspace)/s/Scripts/InstallSentinel.ps1'
          ScriptArguments: '-OnboardingFile onboarding.json'
          azurePowerShellVersion: LatestVersion
          pwsh: true
