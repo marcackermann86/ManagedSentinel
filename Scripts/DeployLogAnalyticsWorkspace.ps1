@@ -1,24 +1,15 @@
 param (
-    [Parameter(Mandatory=$true)]$OnboardingFile
+    [Parameter(Mandatory=$true)]$Name,
+    [Parameter(Mandatory=$true)]$ResourceGroupName,
+    [Parameter(Mandatory=$true)]$Location,
+    [Parameter(Mandatory=$true)]$Tag
 )
 
-#Adding AzSentinel module
-Uninstall-AzureRm
-Install-Module AzSentinelTools -Scope CurrentUser -AllowClobber -Force
-Import-Module AzSentinelTools
-
-$artifactName = "OnboardingFile"
-
-#Build the full path for the onboarding file
-$artifactPath = Join-Path $env:Pipeline_Workspace $artifactName 
-$onboardingFilePath = Join-Path $artifactPath $OnboardingFile
-
-$workspaces = Get-Content -Raw -Path $onboardingFilePath | ConvertFrom-Json
-
-foreach ($item in $workspaces.deployments){
-    Write-Host "Processing workspace $($item.workspace) ..."
-    $ws = Get-AzOperationalInsightsWorkspace -Name $($item.workspace) -ResourceGroupName $($item.resourcegroup) -ErrorAction SilentlyContinue
-    if ($null -eq $ws) {
-        New-AzOperationalInsightsWorkspace -Location $($item.location) -Name $($item.workspace) -ResourceGroupName $($item.resourcegroup) -Tag @{H="$($item.hnumber)}"} -RetentionInDays 90 -Sku pergb2018 -Confirm:$false
-    }
+Write-Host "Processing workspace $Name ..."
+$ws = Get-AzOperationalInsightsWorkspace -Name $Name -ResourceGroupName $ResourceGroupName -ErrorAction SilentlyContinue
+if ($null -eq $ws) {
+    New-AzOperationalInsightsWorkspace -Location $Location -Name $Name -ResourceGroupName $ResourceGroupName -Tag $Tag -RetentionInDays 90 -Sku pergb2018 -Confirm:$false
+}
+else {
+    Write-Host "Log analytics workspace $Name already exists."
 }
