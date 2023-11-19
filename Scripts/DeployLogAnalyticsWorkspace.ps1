@@ -17,8 +17,8 @@ $workspaces = Get-Content -Raw -Path $onboardingFilePath | ConvertFrom-Json
 
 foreach ($item in $workspaces.deployments){
     Write-Host "Processing workspace $($item.workspace) ..."
-    $ws = Get-AzOperationalInsightsWorkspace -Name $($item.workspace) -ResourceGroupName $($item.resourcegroup)} -ErrorAction SilentlyContinue
+    $ws = Get-AzOperationalInsightsWorkspace -Name $($item.workspace) -ResourceGroupName $($item.resourcegroup) -ErrorAction SilentlyContinue
     if ($null -eq $ws) {
-        New-AzOperationalInsightsWorkspace -Location $($item.location)} -Name $($item.workspace) -ResourceGroupName $($item.resourcegroup)} -Tag @{H="$($item.hnumber)}"} -RetentionInDays 90 -Sku pergb2018 -Confirm:$false
+        New-AzOperationalInsightsWorkspace -Location $($item.location) -Name $($item.workspace) -ResourceGroupName $($item.resourcegroup) -Tag @{H="$($item.hnumber)}"} -RetentionInDays 90 -Sku pergb2018 -Confirm:$false
     }
 }
