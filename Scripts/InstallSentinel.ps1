@@ -3,8 +3,8 @@ param (
 )
 
 #Adding AzSentinel module
-Install-Module AzSentinel -Scope CurrentUser -Force
-Import-Module AzSentinel
+Install-Module AzSentinelTools -Scope CurrentUser -Force
+Import-Module AzSentinelTools
 
 $artifactName = "OnboardingFile"
 
