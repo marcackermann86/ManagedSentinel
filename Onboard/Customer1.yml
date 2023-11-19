@@ -1,0 +1,20 @@
+name: build and deploy Sentinel
+
+pool:  
+	name: Azure Pipelines
+	vmImage: 'windows-latest'
+
+trigger: none 
+
+stages:
+  - stage: Customer
+    displayName: 'Deploying to Customer environment'
+    jobs:
+      - template: Pipelines/OnboardCustomer.yml
+			parameters:
+				CustomerName: Customer1
+				HostingNumber: '123456'
+				WorkspaceName: 'H123456-dev
+				ResourceGroupName: 'H123456-rg'
+				ResourceGroupLocation: 'eastus'
+				ServiceConnectionName: 'ARM Sub 1
