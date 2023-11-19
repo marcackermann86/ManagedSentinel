@@ -43,10 +43,10 @@ jobs:
               inputs:
                 targetType: 'Inline'
                 script: |
-                  Install-Module AzSentinelTools -Scope CurrentUser -Force
+                  Install-Module AzSentinelTools -Scope CurrentUser -AllowClobber -Force
                   Import-Module AzSentinelTools
                 pwsh: true
-	    - task: AzurePowerShell@5
+	    - task: AzurePowerShell@4
               displayName: 'Deploy resource group for Sentinel workspace'
 	      inputs:
                 azureSubscription: ${{ parameters.ServiceConnectionName }}
@@ -54,7 +54,7 @@ jobs:
                 ScriptArguments: '-Name ${{ parameters.ResourceGroupName }} -Location ${{ parameters.ResourceGroupLocation }} -Tag @{H="${{ parameters.HostingNumber }}"}'
 		azurePowerShellVersion: LatestVersion
                 pwsh: true
-	    - task: AzurePowerShell@5
+	    - task: AzurePowerShell@4
               displayName: 'Deploy log analytics workspace for Sentinel'
 	      inputs:
                 azureSubscription: ${{ parameters.ServiceConnectionName }}
@@ -70,11 +70,11 @@ jobs:
               inputs:
                 targetType: 'Inline'
                 script: |
-                  Install-Module AzSentinelTools -Scope CurrentUser -Force
+                  Install-Module AzSentinelTools -Scope CurrentUser -AllowClobber -Force
                   Import-Module AzSentinelTools
                 pwsh: true
                 
-            - task: AzurePowerShell@5
+            - task: AzurePowerShell@4
               displayName: 'Enable and configure Azure Sentinel'
               inputs:
 	        azureSubscription: ${{ parameters.ServiceConnectionName }}
