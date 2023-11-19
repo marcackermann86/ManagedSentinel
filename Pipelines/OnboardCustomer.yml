@@ -29,9 +29,9 @@ parameters:
 jobs:
   - deployment: 'Sentinel'
     displayName: DeploySentinelSolution
-	pool:  
-	  name: Azure Pipelines
-	  vmImage: 'windows-latest'
+    pool:
+      name: Azure Pipelines
+      vmImage: 'windows-latest'
     environment: ${{ parameters.CustomerName }}
     strategy:
       runOnce:
