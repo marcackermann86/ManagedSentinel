@@ -1,0 +1,8 @@
+{
+    "deployments": [
+        {
+            "resourcegroup": "H123456-rg",
+            "workspace": "H123456-dev"
+        }
+    ]
+}
