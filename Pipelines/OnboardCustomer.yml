@@ -59,7 +59,7 @@ jobs:
               inputs:
                 azureSubscription: ${{ parameters.ServiceConnectionName }}
                 ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployLogAnalyticsWorkspace.ps1'
-                ScriptArguments: '-Location ${{ parameters.ResourceGroupLocation }} -Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }} -Tag @{H="${{ parameters.hNumber }}"}'
+                ScriptArguments: '-Location ${{ parameters.ResourceGroupLocation }} -Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }} -Tag @{H="${{ parameters.HostingNumber }}"}'
                 azurePowerShellVersion: LatestVersion
                 pwsh: true
         deploy:
