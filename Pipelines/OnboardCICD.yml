@@ -15,7 +15,6 @@ trigger:
 
 stages:
 - stage: build_onboarding_file
-
   jobs:
     - job: AgentJob
       pool:
@@ -40,7 +39,47 @@ stages:
           PathtoPublish: '$(Pipeline.Workspace)'
           ArtifactName: OnboardingFile
 
-- stage: deploy_sentinel
+- stage: deploy_resource_group
+  jobs:
+    - job: AgentJob
+      pool:
+       name: Azure Pipelines
+       vmImage: 'windows-latest'
+      steps:
+      - download: current
+        artifact: OnboardingFile
+      - download: Scripts
+        patterns: '*.ps1'
+      - task: AzurePowerShell@4
+        displayName: 'Deploy Resource Group'
+        inputs:
+         azureSubscription: 'ARM Sub 1'
+         ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployResourceGroup.ps1'
+         ScriptArguments: '-OnboardingFile onboarding.json'
+         azurePowerShellVersion: LatestVersion
+         pwsh: true
+
+- stage: deploy_log_analytics_workspace
+  jobs:
+    - job: AgentJob
+      pool:
+       name: Azure Pipelines
+       vmImage: 'windows-latest'
+      steps:
+      - download: current
+        artifact: OnboardingFile
+      - download: Scripts
+        patterns: '*.ps1'
+      - task: AzurePowerShell@4
+        displayName: 'Deploy Log Analytics Workspace'
+        inputs:
+         azureSubscription: 'ARM Sub 1'
+         ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployLogAnalyticsWorkspace.ps1'
+         ScriptArguments: '-OnboardingFile onboarding.json'
+         azurePowerShellVersion: LatestVersion
+         pwsh: true
+
+- stage: install_sentinel
   jobs:
     - job: AgentJob
       pool:
