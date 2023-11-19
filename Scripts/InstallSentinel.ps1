@@ -3,6 +3,7 @@ param (
 )
 
 #Adding AzSentinel module
+Uninstall-AzureRm
 Install-Module AzSentinelTools -Scope CurrentUser -AllowClobber -Force
 Import-Module AzSentinelTools
 
