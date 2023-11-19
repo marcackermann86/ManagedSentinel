@@ -46,24 +46,22 @@ jobs:
                   Install-Module AzSentinelTools -Scope CurrentUser -Force
                   Import-Module AzSentinelTools
                 pwsh: true
-
-            - task: AzurePowerShell@5
+	    - task: AzurePowerShell@5
               displayName: 'Deploy resource group for Sentinel workspace'
-              inputs:
-		azureSubscription: ${{ parameters.ServiceConnectionName }}
+	      inputs:
+                azureSubscription: ${{ parameters.ServiceConnectionName }}
 		ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployResourceGroup.ps1'
-		ScriptArguments: '-Name ${{ parameters.ResourceGroupName }} -Location ${{ parameters.ResourceGroupLocation }} -Tag @{H="${{ parameters.HostingNumber }}"}'
+                ScriptArguments: '-Name ${{ parameters.ResourceGroupName }} -Location ${{ parameters.ResourceGroupLocation }} -Tag @{H="${{ parameters.HostingNumber }}"}'
 		azurePowerShellVersion: LatestVersion
-		pwsh: true
-
-            - task: AzurePowerShell@5
+                pwsh: true
+	    - task: AzurePowerShell@5
               displayName: 'Deploy log analytics workspace for Sentinel'
-              inputs:
-		azureSubscription: ${{ parameters.ServiceConnectionName }}
+	      inputs:
+                azureSubscription: ${{ parameters.ServiceConnectionName }}
 		ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployLogAnalyticsWorkspace.ps1'
-		ScriptArguments: '-Location ${{ parameters.ResourceGroupLocation }} -Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }} -Tag @{H="${{ parameters.hNumber }}"}'
+                ScriptArguments: '-Location ${{ parameters.ResourceGroupLocation }} -Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }} -Tag @{H="${{ parameters.hNumber }}"}'
 		azurePowerShellVersion: LatestVersion
-		pwsh: true
+                pwsh: true
         deploy:
           steps:
             - checkout: self
