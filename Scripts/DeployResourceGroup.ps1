@@ -1,6 +1,6 @@
 param (
-    [Parameter(Mandatory=$true)]$Name
-    [Parameter(Mandatory=$true)]$Location
+    [Parameter(Mandatory=$true)]$Name,
+    [Parameter(Mandatory=$true)]$Location,
     [Parameter(Mandatory=$true)]$Tag
 )
 
