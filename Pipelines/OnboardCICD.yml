@@ -20,7 +20,7 @@ stages:
     - job: AgentJob
       pool:
        name: Azure Pipelines
-       vmImage: 'ubuntu-latest'
+       vmImage: 'windows-latest'
       steps:
        - task: CopyFiles@2
          displayName: 'Copy Onboarding'
@@ -45,7 +45,7 @@ stages:
     - job: AgentJob
       pool:
        name: Azure Pipelines
-       vmImage: 'ubuntu-latest'
+       vmImage: 'windows-latest'
       steps:
       - download: current
         artifact: OnboardingFile
