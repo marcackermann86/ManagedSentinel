@@ -27,7 +27,7 @@ parameters:
     type: string
 
 jobs:
-  - deployment: 'Sentinel'
+  - deployment: '${{ parameters.CustomerName }} - Sentinel'
     displayName: DeploySentinelSolution
     pool:
       name: Azure Pipelines
