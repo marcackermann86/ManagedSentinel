@@ -78,7 +78,7 @@ jobs:
               displayName: 'Enable and configure Azure Sentinel'
               inputs:
                 azureSubscription: ${{ parameters.ServiceConnectionName }}
-                ScriptPath: '$(Pipeline.Workspace)/s/Scripts/InstallSentinel.ps1'
+                ScriptPath: '$(Pipeline.Workspace)/s/Scripts/EnableSentinel.ps1'
                 ScriptArguments: '-Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }}'
                 azurePowerShellVersion: LatestVersion
                 pwsh: true
