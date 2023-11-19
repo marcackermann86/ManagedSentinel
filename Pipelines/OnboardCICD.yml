@@ -46,8 +46,6 @@ stages:
       pool:
        name: Azure Pipelines
        vmImage: 'windows-2019'
-      variables: 
-      - group: Az connection settings
       steps:
       - download: current
         artifact: OnboardingFile
@@ -57,7 +55,7 @@ stages:
         displayName: 'Install Sentinel'
         inputs:
          azureSubscription: 'ARM Sub 1'
-         ScriptPath: '$(Pipeline.Workspace)/Scripts/Scripts/InstallSentinel.ps1'
+         ScriptPath: '$(Pipeline.Workspace)/Scripts/InstallSentinel.ps1'
          ScriptArguments: '-OnboardingFile onboarding.json'
          azurePowerShellVersion: LatestVersion
          pwsh: true
