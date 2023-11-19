@@ -17,8 +17,8 @@ $workspaces = Get-Content -Raw -Path $onboardingFilePath | ConvertFrom-Json
 
 foreach ($item in $workspaces.deployments){
     Write-Host "Processing workspace $($item.workspace) ..."
-    $rg = Get-AzResourceGroup -ResourceGroupName $($item.resourceGroupName) -ErrorAction SilentlyContinue
+    $rg = Get-AzResourceGroup -ResourceGroupName $($item.resourcegroup) -ErrorAction SilentlyContinue
     if ($null -eq $rg) {
-        New-AzResourceGroup -Name $($item.resourceGroupName) -Location $($item.location) -Tag @{H="$($item.hnumber)"}
+        New-AzResourceGroup -Name $($item.resourcegroup) -Location $($item.location) -Tag @{H="$($item.hnumber)"}
     }
 }
