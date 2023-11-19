@@ -21,7 +21,7 @@ parameters:
   - name: ResourceGroupLocation
     displayName: Enter the resource group location
     type: string
-	
+
   - name: ServiceConnectionName
     displayName: Enter the service connection name for the customer subscribtion
     type: string
@@ -50,20 +50,20 @@ jobs:
             - task: AzurePowerShell@5
               displayName: 'Deploy resource group for Sentinel workspace'
               inputs:
-				azureSubscription: ${{ parameters.ServiceConnectionName }}
-				ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployResourceGroup.ps1'
-				ScriptArguments: '-Name ${{ parameters.ResourceGroupName }} -Location ${{ parameters.ResourceGroupLocation }} -Tag @{H="${{ parameters.HostingNumber }}"}'
-				azurePowerShellVersion: LatestVersion
-				pwsh: true
+		azureSubscription: ${{ parameters.ServiceConnectionName }}
+		ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployResourceGroup.ps1'
+		ScriptArguments: '-Name ${{ parameters.ResourceGroupName }} -Location ${{ parameters.ResourceGroupLocation }} -Tag @{H="${{ parameters.HostingNumber }}"}'
+		azurePowerShellVersion: LatestVersion
+		pwsh: true
 
             - task: AzurePowerShell@5
               displayName: 'Deploy log analytics workspace for Sentinel'
               inputs:
-				azureSubscription: ${{ parameters.ServiceConnectionName }}
-				ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployLogAnalyticsWorkspace.ps1'
-				ScriptArguments: '-Location ${{ parameters.ResourceGroupLocation }} -Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }} -Tag @{H="${{ parameters.hNumber }}"}'
-				azurePowerShellVersion: LatestVersion
-				pwsh: true
+		azureSubscription: ${{ parameters.ServiceConnectionName }}
+		ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployLogAnalyticsWorkspace.ps1'
+		ScriptArguments: '-Location ${{ parameters.ResourceGroupLocation }} -Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }} -Tag @{H="${{ parameters.hNumber }}"}'
+		azurePowerShellVersion: LatestVersion
+		pwsh: true
         deploy:
           steps:
             - checkout: self
@@ -76,11 +76,11 @@ jobs:
                   Import-Module AzSentinelTools
                 pwsh: true
                 
-              - task: AzurePowerShell@5
-                displayName: 'Enable and configure Azure Sentinel'
-                inputs:
-				  azureSubscription: ${{ parameters.ServiceConnectionName }}
-				  ScriptPath: '$(Pipeline.Workspace)/s/Scripts/InstallSentinel.ps1'
-				  ScriptArguments: '-Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }}'
-				  azurePowerShellVersion: LatestVersion
-				  pwsh: true
+            - task: AzurePowerShell@5
+              displayName: 'Enable and configure Azure Sentinel'
+              inputs:
+	        azureSubscription: ${{ parameters.ServiceConnectionName }}
+		ScriptPath: '$(Pipeline.Workspace)/s/Scripts/InstallSentinel.ps1'
+		ScriptArguments: '-Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }}'
+		azurePowerShellVersion: LatestVersion
+		pwsh: true
