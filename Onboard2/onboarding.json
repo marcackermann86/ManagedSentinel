@@ -5,6 +5,12 @@
             "resourcegroup": "H123456-rg",
             "workspace": "H123456-dev",
             "location": "eastus"
+        },
+        {
+            "hnumber": "234567",
+            "resourcegroup": "H234567-rg",
+            "workspace": "H234567-dev",
+            "location": "eastus"
         }
     ]
 }
