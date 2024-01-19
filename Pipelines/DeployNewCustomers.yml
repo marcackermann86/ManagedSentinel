@@ -41,7 +41,7 @@ stages:
           ArtifactName: OnboardingFile
        - pwsh: |
             $variables = Get-Content $(Pipeline.Workspace)/s/Deploy/*.json | ConvertFrom-Json -AsHashtable
-            $variables .GetEnumerator() | ForEach-Object {
+            $variables.GetEnumerator() | ForEach-Object {
               $name = $_.key
               $value = $_.value
               Write-Host "##vso[task.setvariable variable=$name]$value"
