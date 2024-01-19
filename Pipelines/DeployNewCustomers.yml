@@ -16,7 +16,7 @@ stages:
        - task: CopyFiles@2
          displayName: 'Copy new customer onboarding json'
          inputs:
-          SourceFolder: Onboard/*.json
+          SourceFolder: Onboard/*
           TargetFolder: '$(Pipeline.Workspace)'
        - task: Files-Validator@1
          inputs:
