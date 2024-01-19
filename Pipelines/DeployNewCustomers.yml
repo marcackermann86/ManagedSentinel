@@ -33,6 +33,11 @@ stages:
           PathtoPublish: '$(Pipeline.Workspace)/s/Onboard'
           Contents: '*.json'
           ArtifactName: OnboardingFile
+       - task: DeleteFiles@1
+         displayName: 'Remove unneeded files'
+         inputs:
+           SourceFolder: '$(Pipeline.Workspace)/s/Onboard'
+           Contents: '*.json'
        - script: |
           git config --global user.email "marcackermann860@gmail.com"
           git config --global user.name "marcackermann86"
