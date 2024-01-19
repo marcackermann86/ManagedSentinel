@@ -47,9 +47,9 @@ stages:
         - download: current
           artifact: OnboardingFile
           patterns: '*.json'
-        - template: ../Pipelines/OnboardCustomer.yml
-          parameters:
-            OnboardingFile: 'onboarding.json'
+    - template: ../Pipelines/OnboardCustomer.yml
+      parameters:
+        OnboardingFile: 'onboarding.json'
 - stage: cleanup_onboarding_file
   displayName: 'Clean up onboarding files'
   pool:
