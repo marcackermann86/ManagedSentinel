@@ -90,12 +90,12 @@ stages:
             echo "HostingNumber = $(HostingNumber)"
     - template: ../Pipelines/OnboardCustomer_old.yml
       parameters:
-        CustomerName: $(CustomerName)
-        HostingNumber: $(HostingNumber)
-        WorkspaceName: $(WorkspaceName)
-        ResourceGroupName: $(ResourceGroupName)
-        ResourceGroupLocation: $(ResourceGroupLocation)
-        ServiceConnectionName: $(ServiceConnectionName)
+        CustomerName: '$(CustomerName)'
+        HostingNumber: '$(HostingNumber)'
+        WorkspaceName: '$(WorkspaceName)'
+        ResourceGroupName: '$(ResourceGroupName)'
+        ResourceGroupLocation: '$(ResourceGroupLocation)'
+        ServiceConnectionName: '$(ServiceConnectionName)'
 - stage: cleanup_onboarding_file
   displayName: 'Clean up onboarding files'
   pool:
