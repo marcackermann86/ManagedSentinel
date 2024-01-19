@@ -10,8 +10,8 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy newly onboarded customers to OnboardComplete'
   inputs:
-    SourceFolder: Oboard
-    TargetFolder: OboardComplete
+    SourceFolder: Onboard
+    TargetFolder: OnboardComplete
 - task: DeleteFiles@1
   displayName: 'Delete newly onboard customers from Onboard'
   inputs:
