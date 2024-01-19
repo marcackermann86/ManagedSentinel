@@ -52,6 +52,17 @@ stages:
             }
          name: SetVars
          displayName: 'Parse JSON into variables'
+       - task: Bash@3
+         displayName: 'Print variables'
+         inputs:
+          targetType: inline
+          script: |
+            echo "CustomerName = $(CustomerName)"
+            echo "HostingNumber = $(HostingNumber)"
+            echo "WorkspaceName = $(WorkspaceName)"
+            echo "ResourceGroupName = $(ResourceGroupName)"
+            echo "ResourceGroupLocation = $(ResourceGroupLocation)"
+            echo "ServiceConnectionName = $(ServiceConnectionName)"
 
 - stage: B
   displayName: 'Deploying to Customer environment'
@@ -61,12 +72,12 @@ stages:
     - job: B1
       displayName: 'Print variables'
       variables:
-        CustomerName: $[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]
-        HostingNumber: $[ stageDependencies.A.A1.outputs['SetVars.HostingNumber'] ]
-        WorkspaceName: $[ stageDependencies.A.A1.outputs['SetVars.WorkspaceName'] ]
-        ResourceGroupName: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupName'] ]
-        ResourceGroupLocation: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupLocation'] ]
-        ServiceConnectionName: $[ stageDependencies.A.A1.outputs['SetVars.ServiceConnectionName'] ]
+        CustomerName: $[ stageDependencies.A.outputs['A1.SetVars.CustomerName'] ]
+        HostingNumber: $[ stageDependencies.A.outputs['A1.SetVars.HostingNumber'] ]
+        WorkspaceName: $[ stageDependencies.A.outputs['A1.SetVars.WorkspaceName'] ]
+        ResourceGroupName: $[ stageDependencies.A.outputs['A1.SetVars.ResourceGroupName'] ]
+        ResourceGroupLocation: $[ stageDependencies.A.outputs['A1.SetVars.ResourceGroupLocation'] ]
+        ServiceConnectionName: $[ stageDependencies.A.outputs['A1.SetVars.ServiceConnectionName'] ]
       steps:
       - task: Bash@3
         inputs:
