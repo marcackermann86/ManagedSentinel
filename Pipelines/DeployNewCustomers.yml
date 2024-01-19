@@ -10,7 +10,7 @@ trigger:
    exclude:
      - Onboard/Completed/*
 stages:
-- stage: get_new_onboarding_file
+- stage: One
   displayName: 'Getting new customer onboarding file'
   pool:
     name: Azure Pipelines
@@ -49,6 +49,7 @@ stages:
          name: SetVars
          displayName: 'Parse JSON into variables'
        - task: Bash@3
+         name: GetVars
          displayName: 'Print variables'
          inputs:
           targetType: inline
@@ -60,9 +61,10 @@ stages:
             echo "ResourceGroupLocation = $(ResourceGroupLocation)"
             echo "ServiceConnectionName = $(ServiceConnectionName)"
 
-- stage: customer_deployment
+- stage: Two
   displayName: 'Deploying to Customer environment'
-  dependsOn: get_new_onboarding_file
+  dependsOn:
+    - One
   pool:
     name: Azure Pipelines
     vmImage: 'windows-latest'
@@ -70,12 +72,12 @@ stages:
     - job: B
       displayName: 'Print variables'
       variables:
-        CustomerName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.CustomerName'] ]
-        HostingNumber: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.HostingNumber'] ]
-        WorkspaceName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.WorkspaceName'] ]
-        ResourceGroupName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.ResourceGroupName'] ]
-        ResourceGroupLocation: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.ResourceGroupLocation'] ]
-        ServiceConnectionName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.ServiceConnectionName'] ]
+        CustomerName: $[ stageDependencies.One.A.outputs['GetVars.CustomerName'] ]
+        HostingNumber: $[ stageDependencies.one.A.outputs['GetVars.HostingNumber'] ]
+        WorkspaceName: $[ stageDependencies.one.A.outputs['GetVars.WorkspaceName'] ]
+        ResourceGroupName: $[ stageDependencies.one.A.outputs['GetVars.ResourceGroupName'] ]
+        ResourceGroupLocation: $[ stageDependencies.one.A.outputs['GetVars.ResourceGroupLocation'] ]
+        ServiceConnectionName: $[ stageDependencies.one.A.outputs['GetVars.ServiceConnectionName'] ]
       steps:
       - task: Bash@3
         inputs:
@@ -88,9 +90,11 @@ stages:
             echo "ResourceGroupLocation = $(ResourceGroupLocation)"
             echo "ServiceConnectionName = $(ServiceConnectionName)"
 
-- stage: cleanup_onboarding_file
+- stage: Three
   displayName: 'Clean up onboarding files'
-  dependsOn: customer_deployment
+  dependsOn: 
+    - One
+    - Two
   pool:
     name: Azure Pipelines
     vmImage: 'windows-latest'
