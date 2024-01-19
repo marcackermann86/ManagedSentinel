@@ -15,6 +15,7 @@ stages:
     vmImage: 'windows-latest'
   jobs:
     - job:
+      displayName: 'Copy, validate, publish'
       steps:
        - task: CopyFiles@2
          displayName: 'Copy new customer onboarding json'
@@ -36,6 +37,21 @@ stages:
           PathtoPublish: '$(Pipeline.Workspace)/s/Deploy'
           Contents: '*.json'
           ArtifactName: OnboardingFile
+       - pwsh: |
+            $variables = Get-Content $(Pipeline.Workspace)/s/Deploy/*.json | ConvertFrom-Json -AsHashtable
+            $variables .GetEnumerator() | ForEach-Object {
+              $name = $_.key
+              $value = $_.value
+              Write-Host "##vso[task.setvariable variable=$name]$value"
+            }
+         displayName: 'Parse JSON into variables'
+       - task: Bash@3
+         displayName: 'Print variables'
+         inputs:
+          targetType: inline
+          script: |
+            echo "CustomerName = $(CustomerName)"
+            echo "HostingNumber = $(HostingNumber)"
 - stage: customer_deployment
   displayName: 'Deploying to Customer environment'
   pool:
