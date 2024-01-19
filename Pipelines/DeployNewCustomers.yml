@@ -18,7 +18,7 @@ stages:
   jobs:
     - job: A
       displayName: 'Copy, validate, publish'
-      steps: get_info
+      steps:
        - task: CopyFiles@2
          displayName: 'Copy new customer onboarding json'
          inputs:
