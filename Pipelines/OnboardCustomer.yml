@@ -91,3 +91,15 @@ jobs:
                 ScriptArguments: '-Name ${{ parameters.WorkspaceName }} -ResourceGroupName ${{ parameters.ResourceGroupName }}'
                 azurePowerShellVersion: LatestVersion
                 pwsh: true
+
+            - task: CopyFiles@2
+              displayName: 'Move onboarded customers to completed'
+              inputs:
+                SourceFolder: Onboard
+                TargetFolder: OnboardCompleted
+
+            - task: DeleteFiles@1
+              displayName: 'Deleted files copied to OnboardCompleted'
+              inputs:
+                contents: |
+                  /Onboard/*.yml
