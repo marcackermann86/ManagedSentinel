@@ -13,8 +13,8 @@ stages:
       - template: ../Pipelines/OnboardCustomer.yml
         parameters:
             CustomerName: 'Customer1'
-            HostingNumber: '123456'
-            WorkspaceName: 'H123456-dev'
-            ResourceGroupName: 'H123456-rg'
+            HostingNumber: '234567'
+            WorkspaceName: 'H234567-dev'
+            ResourceGroupName: 'H234567-rg'
             ResourceGroupLocation: 'eastus'
             ServiceConnectionName: 'ARM Sub 1'
