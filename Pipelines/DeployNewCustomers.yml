@@ -58,12 +58,12 @@ stages:
         inputs:
           targetType: inline
           script: |
-            CustomerName=$(cat Customer3.json | jq -r 'CustomerName')
-            HostingNumber=$(cat Customer3.json | jq -r 'HostingNumber')
-            WorkspaceName=$(cat Customer3.json | jq -r 'WorkspaceName')
-            ResourceGroupName=$(cat Customer3.json | jq -r 'ResourceGroupName')
-            ResourceGroupLocation=$(cat Customer3.json | jq -r 'ResourceGroupLocation')
-            ServiceConnectionName=$(cat Customer3.json | jq -r 'ServiceConnectionName')
+            CustomerName=$(cat Customer3.json | jq -r '.CustomerName')
+            HostingNumber=$(cat Customer3.json | jq -r '.HostingNumber')
+            WorkspaceName=$(cat Customer3.json | jq -r '.WorkspaceName')
+            ResourceGroupName=$(cat Customer3.json | jq -r '.ResourceGroupName')
+            ResourceGroupLocation=$(cat Customer3.json | jq -r '.ResourceGroupLocation')
+            ServiceConnectionName=$(cat Customer3.json | jq -r '.ServiceConnectionName')
             echo "##vso[task.setvariable variable=CustomerName;isoutput=true]$CustomerName"
             echo "##vso[task.setvariable variable=HostingNumber;isoutput=true]$HostingNumber"
             echo "##vso[task.setvariable variable=WorkspaceName;isoutput=true]$WorkspaceName"
