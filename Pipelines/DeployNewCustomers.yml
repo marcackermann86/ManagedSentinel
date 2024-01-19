@@ -60,12 +60,12 @@ stages:
         inputs:
           targetType: inline
           script: |
-            echo "##vso[task.setvariable variable=CustomerName;]$(jq .CustomerName Customer3.json)"
-            echo "##vso[task.setvariable variable=HostingNumber;]$(jq .HostingNumber Customer3.json)"
-            echo "##vso[task.setvariable variable=WorkspaceName;]$(jq .WorkspaceName Customer3.json)"
-            echo "##vso[task.setvariable variable=ResourceGroupName;]$(jq .ResourceGroupName Customer3.json)"
-            echo "##vso[task.setvariable variable=ResourceGroupLocation;]$(jq .ResourceGroupLocation Customer3.json)"
-            echo "##vso[task.setvariable variable=ServiceConnectionName;]$(jq .ServiceConnectionName Customer3.json)"
+            echo "##vso[task.setvariable variable=CustomerName;]$(jq .CustomerName $(Pipeline.Workspace)/Customer3.json)"
+            echo "##vso[task.setvariable variable=HostingNumber;]$(jq .HostingNumber $(Pipeline.Workspace)/Customer3.json)"
+            echo "##vso[task.setvariable variable=WorkspaceName;]$(jq .WorkspaceName $(Pipeline.Workspace)/Customer3.json)"
+            echo "##vso[task.setvariable variable=ResourceGroupName;]$(jq .ResourceGroupName $(Pipeline.Workspace)/Customer3.json)"
+            echo "##vso[task.setvariable variable=ResourceGroupLocation;]$(jq .ResourceGroupLocation $(Pipeline.Workspace)/Customer3.json)"
+            echo "##vso[task.setvariable variable=ServiceConnectionName;]$(jq .ServiceConnectionName $(Pipeline.Workspace)/Customer3.json)"
     - job: C
       displayName: 'Set Global Variables'
       dependsOn: B
