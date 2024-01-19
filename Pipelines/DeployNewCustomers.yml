@@ -58,18 +58,12 @@ stages:
         inputs:
           targetType: inline
           script: |
-            CustomerName=$(cat Customer3.json | jq -r '.CustomerName')
-            HostingNumber=$(cat Customer3.json | jq -r '.HostingNumber')
-            WorkspaceName=$(cat Customer3.json | jq -r '.WorkspaceName')
-            ResourceGroupName=$(cat Customer3.json | jq -r '.ResourceGroupName')
-            ResourceGroupLocation=$(cat Customer3.json | jq -r '.ResourceGroupLocation')
-            ServiceConnectionName=$(cat Customer3.json | jq -r '.ServiceConnectionName')
-            echo "##vso[task.setvariable variable=CustomerName;isoutput=true]$CustomerName"
-            echo "##vso[task.setvariable variable=HostingNumber;isoutput=true]$HostingNumber"
-            echo "##vso[task.setvariable variable=WorkspaceName;isoutput=true]$WorkspaceName"
-            echo "##vso[task.setvariable variable=ResourceGroupName;isoutput=true]$ResourceGroupName"
-            echo "##vso[task.setvariable variable=ResourceGroupLocation;isoutput=true]$ResourceGroupLocation"
-            echo "##vso[task.setvariable variable=ServiceConnectionName;isoutput=true]$ServiceConnectionName"
+            echo "##vso[task.setvariable variable=CustomerName;]$(jq .CustomerName Customer3.json)"
+            echo "##vso[task.setvariable variable=HostingNumber;]$(jq .HostingNumber Customer3.json)"
+            echo "##vso[task.setvariable variable=WorkspaceName;]$(jq .WorkspaceName Customer3.json)"
+            echo "##vso[task.setvariable variable=ResourceGroupName;]$(jq .ResourceGroupName Customer3.json)"
+            echo "##vso[task.setvariable variable=ResourceGroupLocation;]$(jq .ResourceGroupLocation Customer3.json)"
+            echo "##vso[task.setvariable variable=ServiceConnectionName;]$(jq .ServiceConnectionName Customer3.json)"
     - job: B
       displayName: 'Job B'
       dependsOn: A
