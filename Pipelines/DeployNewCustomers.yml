@@ -13,7 +13,7 @@ steps:
     SourceFolder: Onboard
     TargetFolder: OnboardComplete
 - task: DeleteFiles@1
-  displayName: 'Delete newly onboard customers from Onboard'
+  displayName: 'Delete newly onboarded customers from Onboard'
   inputs:
     contents: |
       /Onboard/*.yml
