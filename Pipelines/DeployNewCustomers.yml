@@ -16,8 +16,9 @@ stages:
        - task: CopyFiles@2
          displayName: 'Copy new customer onboarding json'
          inputs:
-          SourceFolder: '$(Pipeline.Workspace)/Onboard/'
-          TargetFolder: '$(Pipeline.Workspace)/Onboard/Completed'
+          SourceFolder: '$(Pipeline.Workspace)/s/Onboard'
+          Contents: '*.json'
+          TargetFolder: '$(Pipeline.Workspace)/s/Onboard/Completed'
        - task: Files-Validator@1
          inputs:
            rootDir: '$(Pipeline.Workspace)/*.json'
@@ -28,7 +29,8 @@ stages:
        - task: PublishBuildArtifacts@1
          displayName: 'Publish Artifact: OnboardingFile'
          inputs:
-          PathtoPublish: '$(Pipeline.Workspace)/Onboard/*.json'
+          PathtoPublish: '$(Pipeline.Workspace)/s/Onboard'
+          Contents: '*.json'
           ArtifactName: OnboardingFile
        - script: |
           git config --global user.email "marcackermann860@gmail.com"
@@ -36,4 +38,4 @@ stages:
           git add Onboard/Completed/.
           git commit -m "Update folder"
           git push origin master
-          workingDirectory: '$(Pipeline.Workspace)/*.json'
+          workingDirectory: '$(Pipeline.Workspace)/s/Onboard/*.json'
