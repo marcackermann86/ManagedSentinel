@@ -33,7 +33,7 @@ stages:
        - script: |
           git config --global user.email "marcackermann860@gmail.com"
           git config --global user.name "marcackermann86"
-          git add .
+          git add Onboard/Completed/.
           git commit -m "Update folder"
-          git push origin main
+          git push origin master
           workingDirectory: '$(Pipeline.Workspace)/*.json'
