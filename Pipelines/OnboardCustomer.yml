@@ -6,12 +6,12 @@ parameters:
     type: string
 
 jobs:
-  - deployment: '${{ parameters.CustomerName }}_Sentinel'
-    displayName: DeploySentinelSolution
+  - deployment: 'New_Customer_Sentinel'
+    displayName: 'Deploy Sentinel Solution'
     pool:
       name: Azure Pipelines
       vmImage: 'windows-latest'
-    environment: ${{ parameters.CustomerName }}
+    #environment: ${{ parameters.CustomerName }}
     strategy:
       runOnce:
         preDeploy:
