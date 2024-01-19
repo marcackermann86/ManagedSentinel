@@ -70,16 +70,16 @@ stages:
             echo "##vso[task.setvariable variable=ResourceGroupName;isoutput=true]$ResourceGroupName"
             echo "##vso[task.setvariable variable=ResourceGroupLocation;isoutput=true]$ResourceGroupLocation"
             echo "##vso[task.setvariable variable=ServiceConnectionName;isoutput=true]$ServiceConnectionName"
-      - job: B
-        displayName: 'Job B'
-        dependsOn: A
-        variables:
-          CustomerName: $[ dependencies.A.outputs['setOutput.CustomerName'] ]
-          HostingNumber: $[ dependencies.A.outputs['setOutput.HostingNumber'] ]
-          WorkspaceName: $[ dependencies.A.outputs['setOutput.WorkspaceName'] ]
-          ResourceGroupName: $[ dependencies.A.outputs['setOutput.ResourceGroupName'] ]
-          ResourceGroupLocation: $[ dependencies.A.outputs['setOutput.ResourceGroupLocation'] ]
-          ServiceConnectionName: $[ dependencies.A.outputs['setOutput.ServiceConnectionName'] ]
+    - job: B
+      displayName: 'Job B'
+      dependsOn: A
+      variables:
+        CustomerName: $[ dependencies.A.outputs['setOutput.CustomerName'] ]
+        HostingNumber: $[ dependencies.A.outputs['setOutput.HostingNumber'] ]
+        WorkspaceName: $[ dependencies.A.outputs['setOutput.WorkspaceName'] ]
+        ResourceGroupName: $[ dependencies.A.outputs['setOutput.ResourceGroupName'] ]
+        ResourceGroupLocation: $[ dependencies.A.outputs['setOutput.ResourceGroupLocation'] ]
+        ServiceConnectionName: $[ dependencies.A.outputs['setOutput.ServiceConnectionName'] ]
     - template: ../Pipelines/OnboardCustomer_old.yml
       parameters:
         CustomerName: $(CustomerName)
