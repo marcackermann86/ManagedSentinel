@@ -10,5 +10,6 @@ if ($null -eq $rg) {
     New-AzResourceGroup -Name $Name -Location $Location -Tag $Tag
 }
 else {
-    Write-Host "Resource group $Name already exists."
+    Write-Output "##vso[task.logissue type=error]Resource group $Name already exists. Exiting."
+    exit 1
 }

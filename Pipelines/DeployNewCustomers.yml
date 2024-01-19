@@ -1,9 +1,39 @@
-name: build and deploy Sentinel
-resources:
- pipelines:
-   - pipeline: Onboard
-     source: 'OnboardCustomer'
 trigger:
  paths:
    include:
-     - Onboard/*
+     - Onboard/*.json
+
+stages:
+- stage: build_onboarding_file
+  jobs:
+    - job: AgentJob
+      pool:
+       name: Azure Pipelines
+       vmImage: 'windows-latest'
+      steps:
+      - checkout: self
+      persistCredentials: true
+       - task: CopyFiles@2
+         displayName: 'Copy new customer onboarding json'
+         inputs:
+          SourceFolder: Onboard/*.json
+          TargetFolder: '$(Pipeline.Workspace)'
+       - task: Files-Validator@1
+         inputs:
+           rootDir: '$(Pipeline.Workspace)/*.json'
+           validateXML: false
+           validateJSON: true
+           validateYAML: false
+           validatePS: false
+       - task: PublishBuildArtifacts@1
+         displayName: 'Publish Artifact: OnboardingFile'
+         inputs:
+          PathtoPublish: '$(Pipeline.Workspace)'
+          ArtifactName: OnboardingFile
+       - script: |
+          git config --global user.email "marcackermann860@gmail.com"
+          git config --global user.name "marcackermann86"
+          git add .
+          git commit -m "Update folder"
+          git push origin main
+          workingDirectory: '$(Pipeline.Workspace)/*.json'
