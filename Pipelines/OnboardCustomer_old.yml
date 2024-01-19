@@ -1,8 +1,28 @@
 # This is the Template that is used from the Main pipeline
 # This template contains all the required steps
 parameters:
-  - name: OnboardingFile
-    displayName: Enter the onboarding JSON for the new customer
+  - name: CustomerName
+    displayName: Enter the customers name
+    type: string
+
+  - name: HostingNumber
+    displayName: Enter the customers hosting number
+    type: string
+
+  - name: WorkspaceName
+    displayName: Enter the Sentinel workspace name
+    type: string
+
+  - name: ResourceGroupName
+    displayName: Enter the resource group name
+    type: string
+
+  - name: ResourceGroupLocation
+    displayName: Enter the resource group location
+    type: string
+
+  - name: ServiceConnectionName
+    displayName: Enter the service connection name for the customer subscribtion
     type: string
 
 jobs:

@@ -49,7 +49,7 @@ stages:
           patterns: '*.json'
         - template: ../Pipelines/OnboardCustomer.yml
           parameters:
-            OnboardingFile: onboarding.json
+            OnboardingFile: 'onboarding.json'
 - stage: cleanup_onboarding_file
   displayName: 'Clean up onboarding files'
   pool:
