@@ -46,7 +46,7 @@ stages:
       steps:
         - download: current
           artifact: OnboardingFile
-          patterns: '$(build.artifactstagingdirectory)/s/Onboard/*.json'
+          patterns: 'OnboardingFile/*.json'
     - job: A
       displayName: 'Job A'
       pool:
