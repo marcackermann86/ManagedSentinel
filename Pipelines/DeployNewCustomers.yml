@@ -22,20 +22,20 @@ stages:
           SourceFolder: '$(Pipeline.Workspace)/s/Onboard'
           Contents: '*.json'
           TargetFolder: '$(Pipeline.Workspace)/s/Deploy'
-        - task: Files-Validator@1
-          displayName: 'Validating JSON'
-          inputs:
-           rootDir: '$(Pipeline.Workspace)/s/Deploy/*.json'
-           validateXML: false
-           validateJSON: true
-           validateYAML: false
-           validatePS: false
-        - task: PublishBuildArtifacts@1
-          displayName: 'Publish Artifact: OnboardingFile'
-          inputs:
-           PathtoPublish: '$(Pipeline.Workspace)'
-           Contents: '*.json'
-           ArtifactName: OnboardingFile
+       - task: Files-Validator@1
+         displayName: 'Validating JSON'
+         inputs:
+          rootDir: '$(Pipeline.Workspace)/s/Deploy/*.json'
+          validateXML: false
+          validateJSON: true
+          validateYAML: false
+          validatePS: false
+       - task: PublishBuildArtifacts@1
+         displayName: 'Publish Artifact: OnboardingFile'
+         inputs:
+          PathtoPublish: '$(Pipeline.Workspace)'
+          Contents: '*.json'
+          ArtifactName: OnboardingFile
 - stage: customer_deployment
   displayName: 'Deploying to Customer environment'
   pool:
