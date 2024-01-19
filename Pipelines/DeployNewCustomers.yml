@@ -16,9 +16,9 @@ stages:
     name: Azure Pipelines
     vmImage: 'windows-latest'
   jobs:
-    - job:
+    - job: A
       displayName: 'Copy, validate, publish'
-      steps:
+      steps: get_info
        - task: CopyFiles@2
          displayName: 'Copy new customer onboarding json'
          inputs:
@@ -46,6 +46,7 @@ stages:
               $value = $_.value
               Write-Host "##vso[task.setvariable variable=$name]$value"
             }
+         name: SetVars
          displayName: 'Parse JSON into variables'
        - task: Bash@3
          displayName: 'Print variables'
@@ -58,14 +59,23 @@ stages:
             echo "ResourceGroupName = $(ResourceGroupName)"
             echo "ResourceGroupLocation = $(ResourceGroupLocation)"
             echo "ServiceConnectionName = $(ServiceConnectionName)"
+
 - stage: customer_deployment
   displayName: 'Deploying to Customer environment'
+  dependsOn: get_new_onboarding_file
   pool:
     name: Azure Pipelines
     vmImage: 'windows-latest'
   jobs:
-    - job: A
+    - job: B
       displayName: 'Print variables'
+      variables:
+        CustomerName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.CustomerName'] ]
+        HostingNumber: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.HostingNumber'] ]
+        WorkspaceName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.WorkspaceName'] ]
+        ResourceGroupName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.ResourceGroupName'] ]
+        ResourceGroupLocation: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.ResourceGroupLocation'] ]
+        ServiceConnectionName: $[ stageDependencies.get_new_onboarding_file.A.outputs['SetVars.ServiceConnectionName'] ]
       steps:
       - task: Bash@3
         inputs:
@@ -77,13 +87,16 @@ stages:
             echo "ResourceGroupName = $(ResourceGroupName)"
             echo "ResourceGroupLocation = $(ResourceGroupLocation)"
             echo "ServiceConnectionName = $(ServiceConnectionName)"
+
 - stage: cleanup_onboarding_file
   displayName: 'Clean up onboarding files'
+  dependsOn: customer_deployment
   pool:
     name: Azure Pipelines
     vmImage: 'windows-latest'
   jobs:
-    - job: Cleanup
+    - job: C
+      displayName: 'Cleanup'
       steps:
        - checkout: self
          persistCredentials: true
