@@ -38,4 +38,4 @@ stages:
           git add Onboard/Completed/.
           git commit -m "Update folder"
           git push origin master
-          workingDirectory: '$(Pipeline.Workspace)/s/Onboard/*.json'
+         workingDirectory: '$(Pipeline.Workspace)/s/Onboard/*.json'
