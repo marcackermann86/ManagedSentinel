@@ -80,6 +80,14 @@ stages:
         ResourceGroupName: $[ dependencies.A.outputs['setOutput.ResourceGroupName'] ]
         ResourceGroupLocation: $[ dependencies.A.outputs['setOutput.ResourceGroupLocation'] ]
         ServiceConnectionName: $[ dependencies.A.outputs['setOutput.ServiceConnectionName'] ]
+      steps:
+      - task: Bash@3
+        displayName: 'Print variables'
+        inputs:
+          targetType: inline
+          script: |
+            echo "CustomerName = $(CustomerName)"
+            echo "HostingNumber = $(HostingNumber)"
     - template: ../Pipelines/OnboardCustomer_old.yml
       parameters:
         CustomerName: $(CustomerName)
