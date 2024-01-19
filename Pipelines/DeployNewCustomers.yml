@@ -1,38 +1,79 @@
-trigger:
+name: Build and deploy Sentinel for new customers
+resources:
+ pipelines:
+   - pipeline: Scripts
+     source: 'scriptsCI'trigger:
  paths:
    include:
      - Onboard/*.json
-
 stages:
-- stage: build_onboarding_file
+- stage: get_new_onboarding_file
+  displayName: 'Getting new customer onboarding file'
+  pool:
+    name: Azure Pipelines
+    vmImage: 'windows-latest'
   jobs:
-    - job: AgentJob
-      pool:
-       name: Azure Pipelines
-       vmImage: 'windows-latest'
+    - job:
+      steps:
+       - task: CopyFiles@2
+          displayName: 'Copy new customer onboarding json'
+          inputs:
+            SourceFolder: '$(Pipeline.Workspace)/s/Onboard'
+            Contents: '*.json'
+            TargetFolder: '$(Pipeline.Workspace)/s/Deploy'
+        - task: Files-Validator@1
+          displayName: 'Validating JSON'
+          inputs:
+            rootDir: '$(Pipeline.Workspace)/s/Deploy/*.json'
+            validateXML: false
+            validateJSON: true
+            validateYAML: false
+            validatePS: false
+        - task: PublishBuildArtifacts@1
+          displayName: 'Publish Artifact: OnboardingFile'
+          inputs:
+            PathtoPublish: '$(Pipeline.Workspace)'
+            Contents: '*.json'
+            ArtifactName: OnboardingFile
+- stage: customer_deployment
+  displayName: 'Deploying to Customer environment'
+  pool:
+    name: Azure Pipelines
+    vmImage: 'windows-latest'
+  jobs:
+    - job:
+      steps:
+        - download: current
+          artifact: OnboardingFile
+          patterns: '*.json'
+        - template: ../Pipelines/OnboardCustomer.yml
+          parameters:
+            OnboardingFile: onboarding.json
+- stage: cleanup_onboarding_file
+  displayName: 'Clean up onboarding files'
+  pool:
+    name: Azure Pipelines
+    vmImage: 'windows-latest'
+  jobs:
+    - job: Cleanup
       steps:
        - checkout: self
          persistCredentials: true
          fetchDepth: 0
        - task: CopyFiles@2
-         displayName: 'Copy new customer onboarding json'
+         displayName: 'Copy new customer onboarding json to completed'
          inputs:
           SourceFolder: '$(Pipeline.Workspace)/s/Onboard'
           Contents: '*.json'
           TargetFolder: '$(Pipeline.Workspace)/s/Onboard/Completed'
        - task: Files-Validator@1
+         displayName: 'Validating JSON'
          inputs:
-           rootDir: '$(Pipeline.Workspace)/*.json'
+           rootDir: '$(Pipeline.Workspace)/s/Onboard'
            validateXML: false
            validateJSON: true
            validateYAML: false
            validatePS: false
-       - task: PublishBuildArtifacts@1
-         displayName: 'Publish Artifact: OnboardingFile'
-         inputs:
-          PathtoPublish: '$(Pipeline.Workspace)/s/Onboard'
-          Contents: '*.json'
-          ArtifactName: OnboardingFile
        - task: DeleteFiles@1
          displayName: 'Remove unneeded files'
          inputs:
