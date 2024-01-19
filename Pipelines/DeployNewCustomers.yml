@@ -1,20 +1,24 @@
 name: Build and deploy Sentinel for new customers
+
 resources:
  pipelines:
    - pipeline: Scripts
      source: 'scriptsCI'
+     
 trigger:
  paths:
    include:
      - Onboard/*.json
    exclude:
      - Onboard/Completed/*
+
+pool:
+  name: Azure Pipelines
+  vmImage: 'windows-latest'
+
 stages:
 - stage: One
   displayName: 'Getting new customer onboarding file'
-  pool:
-    name: Azure Pipelines
-    vmImage: 'windows-latest'
   jobs:
     - job: A
       displayName: 'Copy, validate, publish'
@@ -49,7 +53,6 @@ stages:
          name: SetVars
          displayName: 'Parse JSON into variables'
        - task: Bash@3
-         name: GetVars
          displayName: 'Print variables'
          inputs:
           targetType: inline
@@ -65,19 +68,16 @@ stages:
   displayName: 'Deploying to Customer environment'
   dependsOn:
     - One
-  pool:
-    name: Azure Pipelines
-    vmImage: 'windows-latest'
   jobs:
     - job: B
       displayName: 'Print variables'
       variables:
-        CustomerName: $[ stageDependencies.One.A.outputs['GetVars.CustomerName'] ]
-        HostingNumber: $[ stageDependencies.one.A.outputs['GetVars.HostingNumber'] ]
-        WorkspaceName: $[ stageDependencies.one.A.outputs['GetVars.WorkspaceName'] ]
-        ResourceGroupName: $[ stageDependencies.one.A.outputs['GetVars.ResourceGroupName'] ]
-        ResourceGroupLocation: $[ stageDependencies.one.A.outputs['GetVars.ResourceGroupLocation'] ]
-        ServiceConnectionName: $[ stageDependencies.one.A.outputs['GetVars.ServiceConnectionName'] ]
+        CustomerName: $[ stageDependencies.One.A.outputs['SetVars.CustomerName'] ]
+        HostingNumber: $[ stageDependencies.One.A.outputs['SetVars.HostingNumber'] ]
+        WorkspaceName: $[ stageDependencies.One.A.outputs['SetVars.WorkspaceName'] ]
+        ResourceGroupName: $[ stageDependencies.One.A.outputs['SetVars.ResourceGroupName'] ]
+        ResourceGroupLocation: $[ stageDependencies.One.A.outputs['SetVars.ResourceGroupLocation'] ]
+        ServiceConnectionName: $[ stageDependencies.One.A.outputs['SetVars.ServiceConnectionName'] ]
       steps:
       - task: Bash@3
         inputs:
@@ -95,9 +95,6 @@ stages:
   dependsOn: 
     - One
     - Two
-  pool:
-    name: Azure Pipelines
-    vmImage: 'windows-latest'
   jobs:
     - job: C
       displayName: 'Cleanup'
