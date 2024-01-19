@@ -72,12 +72,12 @@ stages:
     - job: B
       displayName: 'Print variables'
       variables:
-        CustomerName: $[ stageDependencies.One.A.outputs['SetVars.CustomerName'] ]
-        HostingNumber: $[ stageDependencies.One.A.outputs['SetVars.HostingNumber'] ]
-        WorkspaceName: $[ stageDependencies.One.A.outputs['SetVars.WorkspaceName'] ]
-        ResourceGroupName: $[ stageDependencies.One.A.outputs['SetVars.ResourceGroupName'] ]
-        ResourceGroupLocation: $[ stageDependencies.One.A.outputs['SetVars.ResourceGroupLocation'] ]
-        ServiceConnectionName: $[ stageDependencies.One.A.outputs['SetVars.ServiceConnectionName'] ]
+        CustomerName: $[ dependencies.One.outputs['SetVars.CustomerName'] ]
+        HostingNumber: $[ dependencies.One.outputs['SetVars.HostingNumber'] ]
+        WorkspaceName: $[ dependencies.One.outputs['SetVars.WorkspaceName'] ]
+        ResourceGroupName: $[ dependencies.One.outputs['SetVars.ResourceGroupName'] ]
+        ResourceGroupLocation: $[ dependencies.One.outputs['SetVars.ResourceGroupLocation'] ]
+        ServiceConnectionName: $[ dependencies.One.outputs['SetVars.ServiceConnectionName'] ]
       steps:
       - task: Bash@3
         inputs:
