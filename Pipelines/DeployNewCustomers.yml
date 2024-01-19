@@ -37,5 +37,5 @@ stages:
           git config --global user.name "marcackermann86"
           git add .
           git commit -m "Update folder"
-          git push -u origin master
+          git push origin master
          workingDirectory: '$(Pipeline.Workspace)/s/Onboard/Completed'
