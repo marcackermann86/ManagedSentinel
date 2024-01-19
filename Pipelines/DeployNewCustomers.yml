@@ -1,0 +1,19 @@
+trigger:
+ paths:
+   include:
+     - Oboard/*
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+- task: CopyFiles@2
+  displayName: 'Copy newly onboarded customers to OnboardComplete'
+  inputs:
+    SourceFolder: Oboard
+    TargetFolder: OboardComplete
+- task: DeleteFiles@1
+  displayName: 'Delete newly onboard customers from Onboard'
+  inputs:
+    contents: |
+      /Onboard/*.yml
