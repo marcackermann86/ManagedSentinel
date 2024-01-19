@@ -2,7 +2,8 @@ name: Build and deploy Sentinel for new customers
 resources:
  pipelines:
    - pipeline: Scripts
-     source: 'scriptsCI'trigger:
+     source: 'scriptsCI'
+trigger:
  paths:
    include:
      - Onboard/*.json
