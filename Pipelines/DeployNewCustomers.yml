@@ -33,7 +33,7 @@ stages:
        - task: PublishBuildArtifacts@1
          displayName: 'Publish Artifact: OnboardingFile'
          inputs:
-          PathtoPublish: '$(Pipeline.Workspace)/s/Deploy/*.json'
+          PathtoPublish: '$(Pipeline.Workspace)/s/Deploy'
           Contents: '*.json'
           ArtifactName: OnboardingFile
 - stage: customer_deployment
@@ -46,7 +46,7 @@ stages:
       steps:
         - download: current
           artifact: OnboardingFile
-          patterns: 'OnboardingFile/s/Onboard/*.json'
+          patterns: '$(build.artifactstagingdirectory)/s/Onboard/*.json'
     - job: A
       displayName: 'Job A'
       pool:
