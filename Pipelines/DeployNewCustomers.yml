@@ -72,7 +72,7 @@ stages:
     - job: B1
       displayName: 'Print variables'
       variables:
-        CustomerName: $[ dependencies.A.outputs['A1.SetVars.CustomerName'] ]
+        CustomerName: $[ stageDependencies.A.A1.outputs ]
         HostingNumber: $[ dependencies.A.outputs['A1.SetVars.HostingNumber'] ]
         WorkspaceName: $[ dependencies.A.outputs['A1.SetVars.WorkspaceName'] ]
         ResourceGroupName: $[ dependencies.A.outputs['A1.SetVars.ResourceGroupName'] ]
