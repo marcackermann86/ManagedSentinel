@@ -1,5 +1,14 @@
 # This is the Template that is used from the Main pipeline
 # This template contains all the required steps
+name: Build and deploy Sentinel for customer
+resources:
+ pipelines:
+   - pipeline: Scripts
+     source: 'scriptsCI'
+trigger:
+ paths:
+   include:
+     - Onboard/*
 
 parameters:
   - name: CustomerName
