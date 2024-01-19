@@ -1,0 +1,10 @@
+{
+    "deployments": [
+        {
+            "hnumber": "123456",
+            "resourcegroup": "H123456-rg",
+            "workspace": "H123456-dev",
+            "location": "eastus"
+        }
+    ]
+}
