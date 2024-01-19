@@ -47,9 +47,47 @@ stages:
         - download: current
           artifact: OnboardingFile
           patterns: '*.json'
-    - template: ../Pipelines/OnboardCustomer.yml
+    - job: A
+      displayName: 'Job A'
+      pool:
+        vmImage: windows-latest
+      steps:
+      - task: Bash@3
+        displayName: 'Get Json values and set output variables'
+        name: setOutput
+        inputs:
+          targetType: inline
+          script: |
+            CustomerName=$(cat *.json | jq -r 'CustomerName')
+            HostingNumber=$(cat *.json | jq -r 'HostingNumber')
+            WorkspaceName=$(cat *.json | jq -r 'WorkspaceName')
+            ResourceGroupName=$(cat *.json | jq -r 'ResourceGroupName')
+            ResourceGroupLocation=$(cat *.json | jq -r 'ResourceGroupLocation')
+            ServiceConnectionName=$(cat *.json | jq -r 'ServiceConnectionName')
+            echo "##vso[task.setvariable variable=CustomerName;isoutput=true]$CustomerName"
+            echo "##vso[task.setvariable variable=HostingNumber;isoutput=true]$HostingNumber"
+            echo "##vso[task.setvariable variable=WorkspaceName;isoutput=true]$WorkspaceName"
+            echo "##vso[task.setvariable variable=ResourceGroupName;isoutput=true]$ResourceGroupName"
+            echo "##vso[task.setvariable variable=ResourceGroupLocation;isoutput=true]$ResourceGroupLocation"
+            echo "##vso[task.setvariable variable=ServiceConnectionName;isoutput=true]$ServiceConnectionName"
+      - job: B
+        displayName: 'Job B'
+        dependsOn: A
+        variables:
+          CustomerName: $[ dependencies.A.outputs['setOutput.CustomerName'] ]
+          HostingNumber: $[ dependencies.A.outputs['setOutput.HostingNumber'] ]
+          WorkspaceName: $[ dependencies.A.outputs['setOutput.WorkspaceName'] ]
+          ResourceGroupName: $[ dependencies.A.outputs['setOutput.ResourceGroupName'] ]
+          ResourceGroupLocation: $[ dependencies.A.outputs['setOutput.ResourceGroupLocation'] ]
+          ServiceConnectionName: $[ dependencies.A.outputs['setOutput.ServiceConnectionName'] ]
+    - template: ../Pipelines/OnboardCustomer_old.yml
       parameters:
-        OnboardingFile: 'onboarding.json'
+        CustomerName: $(CustomerName)
+        HostingNumber: $(HostingNumber)
+        WorkspaceName: $(WorkspaceName)
+        ResourceGroupName: $(ResourceGroupName)
+        ResourceGroupLocation: $(ResourceGroupLocation)
+        ServiceConnectionName: $(ServiceConnectionName)
 - stage: cleanup_onboarding_file
   displayName: 'Clean up onboarding files'
   pool:
