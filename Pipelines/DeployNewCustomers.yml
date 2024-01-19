@@ -12,7 +12,6 @@ stages:
        vmImage: 'windows-latest'
       steps:
       - checkout: self
-      persistCredentials: true
        - task: CopyFiles@2
          displayName: 'Copy new customer onboarding json'
          inputs:
