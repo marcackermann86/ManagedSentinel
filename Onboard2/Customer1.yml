@@ -4,7 +4,10 @@ pool:
   name: Azure Pipelines
   vmImage: 'windows-latest'
 
-trigger: none 
+trigger:
+  paths:
+    include:
+      - Onboard/Customer1.yml
 
 stages:
   - stage: Customer
