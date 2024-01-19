@@ -65,6 +65,8 @@ stages:
             echo "ServiceConnectionName = $(ServiceConnectionName)"
     - job: A2
       displayName: 'Print variables'
+      dependsOn:
+        - A1
       variables:
         CustomerName0: $[ stageDependencies.A.A1.SetVars.outputs['CustomerName'] ]
         CustomerName1: $[ stageDependencies.A.A1.SetVars.outputs['SetVars.CustomerName'] ]
