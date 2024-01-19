@@ -54,6 +54,10 @@ stages:
           script: |
             echo "CustomerName = $(CustomerName)"
             echo "HostingNumber = $(HostingNumber)"
+            echo "WorkspaceName = $(WorkspaceName)"
+            echo "ResourceGroupName = $(ResourceGroupName)"
+            echo "ResourceGroupLocation = $(ResourceGroupLocation)"
+            echo "ServiceConnectionName = $(ServiceConnectionName)"
 - stage: customer_deployment
   displayName: 'Deploying to Customer environment'
   pool:
@@ -61,48 +65,18 @@ stages:
     vmImage: 'windows-latest'
   jobs:
     - job: A
-      displayName: 'Download Artifact'
-      steps:
-        - download: current
-          artifact: OnboardingFile
-          patterns: 'OnboardingFile/*.json'
-    - job: B
-      displayName: 'Set Local Variables'
-      dependsOn: A
-      pool:
-        vmImage: windows-latest
+      displayName: 'Print variables'
       steps:
       - task: Bash@3
-        displayName: 'Get Json values and set output variables'
-        name: setOutput
-        inputs:
-          targetType: inline
-          script: |
-            echo "##vso[task.setvariable variable=CustomerName;]$(jq .CustomerName */Customer3.json)"
-            echo "##vso[task.setvariable variable=HostingNumber;]$(jq .HostingNumber */Customer3.json)"
-            echo "##vso[task.setvariable variable=WorkspaceName;]$(jq .WorkspaceName */Customer3.json)"
-            echo "##vso[task.setvariable variable=ResourceGroupName;]$(jq .ResourceGroupName */Customer3.json)"
-            echo "##vso[task.setvariable variable=ResourceGroupLocation;]$(jq .ResourceGroupLocation */Customer3.json)"
-            echo "##vso[task.setvariable variable=ServiceConnectionName;]$(jq .ServiceConnectionName */Customer3.json)"
-    - job: C
-      displayName: 'Set Global Variables'
-      dependsOn: B
-      variables:
-        CustomerName: $[ dependencies.B.outputs['setOutput.CustomerName'] ]
-        HostingNumber: $[ dependencies.B.outputs['setOutput.HostingNumber'] ]
-        WorkspaceName: $[ dependencies.B.outputs['setOutput.WorkspaceName'] ]
-        ResourceGroupName: $[ dependencies.B.outputs['setOutput.ResourceGroupName'] ]
-        ResourceGroupLocation: $[ dependencies.B.outputs['setOutput.ResourceGroupLocation'] ]
-        ServiceConnectionName: $[ dependencies.B.outputs['setOutput.ServiceConnectionName'] ]
-      steps:
-      - task: Bash@3
-        displayName: 'Print variables'
         inputs:
           targetType: inline
           script: |
             echo "CustomerName = $(CustomerName)"
             echo "HostingNumber = $(HostingNumber)"
-
+            echo "WorkspaceName = $(WorkspaceName)"
+            echo "ResourceGroupName = $(ResourceGroupName)"
+            echo "ResourceGroupLocation = $(ResourceGroupLocation)"
+            echo "ServiceConnectionName = $(ServiceConnectionName)"
 - stage: cleanup_onboarding_file
   displayName: 'Clean up onboarding files'
   pool:
