@@ -101,29 +101,29 @@ stages:
   displayName: 'Deploying to Customer environment'
   dependsOn:
     - A
+  variables:
+    CustomerName0: $[ stageDependencies.A.A1.SetVars.outputs['CustomerName'] ]
+    CustomerName1: $[ stageDependencies.A.A1.SetVars.outputs['SetVars.CustomerName'] ]
+    CustomerName2: $[ stageDependencies.A.A1.SetVars.outputs['A1.SetVars.CustomerName'] ]
+    CustomerName3: $[ stageDependencies.A.A1.outputs['CustomerName'] ]
+    CustomerName4: $[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]
+    CustomerName5: $[ stageDependencies.A.A1.outputs['A1.SetVars.CustomerName'] ]
+    CustomerName6: $[ stageDependencies.A.outputs['CustomerName'] ]
+    CustomerName7: $[ stageDependencies.A.outputs['SetVars.CustomerName'] ]
+    CustomerName8: $[ stageDependencies.A.outputs['A1.SetVars.CustomerName'] ]
+
+    CustomerName10: $[ dependencies.A.A1.SetVars.outputs['CustomerName'] ]
+    CustomerName11: $[ dependencies.A.A1.SetVars.outputs['SetVars.CustomerName'] ]
+    CustomerName12: $[ dependencies.A.A1.SetVars.outputs['A1.SetVars.CustomerName'] ]
+    CustomerName13: $[ dependencies.A.A1.outputs['CustomerName'] ]
+    CustomerName14: $[ dependencies.A.A1.outputs['SetVars.CustomerName'] ]
+    CustomerName15: $[ dependencies.A.A1.outputs['A1.SetVars.CustomerName'] ]
+    CustomerName16: $[ dependencies.A.outputs['CustomerName'] ]
+    CustomerName17: $[ dependencies.A.outputs['SetVars.CustomerName'] ]
+    CustomerName18: $[ dependencies.A.outputs['A1.SetVars.CustomerName'] ]
   jobs:
     - job: B1
       displayName: 'Print variables'
-      variables:
-        CustomerName0: $[ stageDependencies.A.A1.SetVars.outputs['CustomerName'] ]
-        CustomerName1: $[ stageDependencies.A.A1.SetVars.outputs['SetVars.CustomerName'] ]
-        CustomerName2: $[ stageDependencies.A.A1.SetVars.outputs['A1.SetVars.CustomerName'] ]
-        CustomerName3: $[ stageDependencies.A.A1.outputs['CustomerName'] ]
-        CustomerName4: $[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]
-        CustomerName5: $[ stageDependencies.A.A1.outputs['A1.SetVars.CustomerName'] ]
-        CustomerName6: $[ stageDependencies.A.outputs['CustomerName'] ]
-        CustomerName7: $[ stageDependencies.A.outputs['SetVars.CustomerName'] ]
-        CustomerName8: $[ stageDependencies.A.outputs['A1.SetVars.CustomerName'] ]
-
-        CustomerName10: $[ dependencies.A.A1.SetVars.outputs['CustomerName'] ]
-        CustomerName11: $[ dependencies.A.A1.SetVars.outputs['SetVars.CustomerName'] ]
-        CustomerName12: $[ dependencies.A.A1.SetVars.outputs['A1.SetVars.CustomerName'] ]
-        CustomerName13: $[ dependencies.A.A1.outputs['CustomerName'] ]
-        CustomerName14: $[ dependencies.A.A1.outputs['SetVars.CustomerName'] ]
-        CustomerName15: $[ dependencies.A.A1.outputs['A1.SetVars.CustomerName'] ]
-        CustomerName16: $[ dependencies.A.outputs['CustomerName'] ]
-        CustomerName17: $[ dependencies.A.outputs['SetVars.CustomerName'] ]
-        CustomerName18: $[ dependencies.A.outputs['A1.SetVars.CustomerName'] ]
       steps:
       - task: Bash@3
         inputs:
