@@ -11,7 +11,8 @@ stages:
        name: Azure Pipelines
        vmImage: 'windows-latest'
       steps:
-      - checkout: self
+       - checkout: self
+       persistCredentials: true
        - task: CopyFiles@2
          displayName: 'Copy new customer onboarding json'
          inputs:
