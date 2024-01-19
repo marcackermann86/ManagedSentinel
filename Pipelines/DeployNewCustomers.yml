@@ -1,19 +1,9 @@
+name: build and deploy Sentinel
+resources:
+ pipelines:
+   - pipeline: Onboard
+     source: 'OnboardCustomer'
 trigger:
  paths:
    include:
      - Onboard/*
-
-pool:
-  vmImage: 'windows-2019'
-
-steps:
-- task: CopyFiles@2
-  displayName: 'Copy newly onboarded customers to OnboardComplete'
-  inputs:
-    SourceFolder: Onboard
-    TargetFolder: OnboardComplete
-- task: DeleteFiles@1
-  displayName: 'Delete newly onboarded customers from Onboard'
-  inputs:
-    contents: |
-      /Onboard/*.yml
