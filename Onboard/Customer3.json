@@ -1,0 +1,8 @@
+{
+    "CustomerName": "Customer3",
+    "HostingNumber": "345678",
+    "WorkspaceName": "H345678-dev",
+    "ResourceGroupName": "H345678-rg",
+    "ResourceGroupLocation": "eastus",
+    "ServiceConnectionName": "ARM Sub 1"
+}
