@@ -17,4 +17,4 @@ stages:
             WorkspaceName: 'H234567-dev'
             ResourceGroupName: 'H234567-rg'
             ResourceGroupLocation: 'eastus'
-            ServiceConnectionName: 'ARM Sub 1'
+            ServiceConnectionName: 'ARM Sub 2'
