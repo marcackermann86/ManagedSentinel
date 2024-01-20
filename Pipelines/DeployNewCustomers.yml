@@ -66,13 +66,13 @@ stages:
     ServiceConnectionName: $[ stageDependencies.A.A1.outputs['SetVars.ServiceConnectionName'] ]
   jobs:
     - template: ../Pipelines/OnboardCustomer.yml
-          parameters:
-              CustomerName: $(CustomerName)
-              HostingNumber: $(HostingNumber)
-              WorkspaceName: $(WorkspaceName)
-              ResourceGroupName: $(ResourceGroupName)
-              ResourceGroupLocation: $(ResourceGroupLocation)
-              ServiceConnectionName: $(ServiceConnectionName)
+      parameters:
+        CustomerName: $(CustomerName)
+        HostingNumber: $(HostingNumber)
+        WorkspaceName: $(WorkspaceName)
+        ResourceGroupName: $(ResourceGroupName)
+        ResourceGroupLocation: $(ResourceGroupLocation)
+        ServiceConnectionName: $(ServiceConnectionName)
 
 - stage: C
   displayName: 'Clean up onboarding files'
