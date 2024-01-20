@@ -67,7 +67,7 @@ stages:
   jobs:
   - template: ../Pipelines/OnboardCustomer.yml
     parameters:
-      CustomerName: CustomerName
+      CustomerName: $CustomerName
       HostingNumber: '$(HostingNumber)'
       WorkspaceName: '$(WorkspaceName)'
       ResourceGroupName: '$(ResourceGroupName)'
