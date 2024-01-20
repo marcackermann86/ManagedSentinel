@@ -52,28 +52,6 @@ stages:
             }
          name: SetVars
          displayName: 'Parse JSON into variables'
-    - job: A2
-      displayName: 'Print variables'
-      dependsOn:
-        - A1
-      variables:
-        CustomerName: $[ dependencies.A1.outputs['SetVars.CustomerName'] ]
-        HostingNumber: $[ dependencies.A1.outputs['SetVars.HostingNumber'] ]
-        WorkspaceName: $[ dependencies.A1.outputs['SetVars.WorkspaceName'] ]
-        ResourceGroupName: $[ dependencies.A1.outputs['SetVars.ResourceGroupName'] ]
-        ResourceGroupLocation: $[ dependencies.A1.outputs['SetVars.ResourceGroupLocation'] ]
-        ServiceConnectionName: $[ dependencies.A1.outputs['SetVars.ServiceConnectionName'] ]
-      steps:
-      - task: Bash@3
-        inputs:
-          targetType: inline
-          script: |
-            echo "CustomerName = $(CustomerName)"
-            echo "HostingNumber = $(HostingNumber)"
-            echo "WorkspaceName = $(WorkspaceName)"
-            echo "ResourceGroupName = $(ResourceGroupName)"
-            echo "ResourceGroupLocation = $(ResourceGroupLocation)"
-            echo "ServiceConnectionName = $(ServiceConnectionName)"
 
 - stage: B
   displayName: 'Deploying to Customer environment'
@@ -87,19 +65,14 @@ stages:
     ResourceGroupLocation: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupLocation'] ]
     ServiceConnectionName: $[ stageDependencies.A.A1.outputs['SetVars.ServiceConnectionName'] ]
   jobs:
-    - job: B1
-      displayName: 'Print variables'
-      steps:
-      - task: Bash@3
-        inputs:
-          targetType: inline
-          script: |
-            echo "CustomerName = $(CustomerName)"
-            echo "HostingNumber = $(HostingNumber)"
-            echo "WorkspaceName = $(WorkspaceName)"
-            echo "ResourceGroupName = $(ResourceGroupName)"
-            echo "ResourceGroupLocation = $(ResourceGroupLocation)"
-            echo "ServiceConnectionName = $(ServiceConnectionName)"
+    - template: ../Pipelines/OnboardCustomer.yml
+          parameters:
+              CustomerName: $(CustomerName)
+              HostingNumber: $(HostingNumber)
+              WorkspaceName: $(WorkspaceName)
+              ResourceGroupName: $(ResourceGroupName)
+              ResourceGroupLocation: $(ResourceGroupLocation)
+              ServiceConnectionName: $(ServiceConnectionName)
 
 - stage: C
   displayName: 'Clean up onboarding files'
