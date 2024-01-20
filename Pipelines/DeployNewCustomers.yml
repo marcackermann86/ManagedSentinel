@@ -50,20 +50,20 @@ stages:
               $value = $_.value
               echo "##vso[task.setvariable variable=$name;isOutput=true]$value"
             }
-         name: SetVars
+         name: SetVars2
          displayName: 'Parse JSON into variables'
-       - bash: |
-           echo "$(jq .CustomerName D:/a/1/s/Deploy/*.json)"
-           echo "##vso[task.setvariable variable=HostingNumber;isOutput=true]$(jq .HostingNumber D:/a/1/s/Deploy/*.json)"
-           echo "##vso[task.setvariable variable=WorkspaceName;isOutput=true]$(jq .WorkspaceName D:/a/1/s/Deploy/*.json)"
-           echo "##vso[task.setvariable variable=ResourceGroupName;isOutput=true]$(jq .ResourceGroupName D:/a/1/s/Deploy/*.json)"
-           echo "##vso[task.setvariable variable=ResourceGroupLocation;isOutput=true]$(jq .ResourceGroupLocation D:/a/1/s/Deploy/*.json)"
-           echo "##vso[task.setvariable variable=ServiceConnectionName;isOutput=true]$(jq .ServiceConnectionName D:/a/1/s/Deploy/*.json)"
        - task: Bash@3
-         displayName: 'Print variables'
+         name: SetVars
+         displayName: 'Set and print variables'
          inputs:
           targetType: inline
           script: |
+            echo "##vso[task.setvariable variable=HostingNumber;isOutput=true]$(jq .CustomerName D:/a/1/s/Deploy/*.json)"
+            echo "##vso[task.setvariable variable=HostingNumber;isOutput=true]$(jq .HostingNumber D:/a/1/s/Deploy/*.json)"
+            echo "##vso[task.setvariable variable=WorkspaceName;isOutput=true]$(jq .WorkspaceName D:/a/1/s/Deploy/*.json)"
+            echo "##vso[task.setvariable variable=ResourceGroupName;isOutput=true]$(jq .ResourceGroupName D:/a/1/s/Deploy/*.json)"
+            echo "##vso[task.setvariable variable=ResourceGroupLocation;isOutput=true]$(jq .ResourceGroupLocation D:/a/1/s/Deploy/*.json)"
+            echo "##vso[task.setvariable variable=ServiceConnectionName;isOutput=true]$(jq .ServiceConnectionName D:/a/1/s/Deploy/*.json)"
             echo "CustomerName = $(CustomerName)"
             echo "HostingNumber = $(HostingNumber)"
             echo "WorkspaceName = $(WorkspaceName)"
