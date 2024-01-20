@@ -48,7 +48,7 @@ stages:
             $variables.GetEnumerator() | ForEach-Object {
               $name = $_.key
               $value = $_.value
-              Write-Host "##vso[task.setvariable variable=$name;isOutput=$true]$value"
+              echo "##vso[task.setvariable variable=$name;isOutput=true]$value"
             }
          name: SetVars
          displayName: 'Parse JSON into variables'
