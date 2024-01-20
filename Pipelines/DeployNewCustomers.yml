@@ -57,7 +57,6 @@ stages:
   displayName: 'Deploying to Customer environment'
   dependsOn:
     - A
-  jobs:
   variables:
     CustomerName: $[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]
     HostingNumber: $[ stageDependencies.A.A1.outputs['SetVars.HostingNumber'] ]
@@ -65,14 +64,15 @@ stages:
     ResourceGroupName: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupName'] ]
     ResourceGroupLocation: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupLocation'] ]
     ServiceConnectionName: $[ stageDependencies.A.A1.outputs['SetVars.ServiceConnectionName'] ]
-    - template: ../Pipelines/OnboardCustomer.yml
-      parameters:
-        CustomerName: '$(CustomerName)'
-        HostingNumber: '$(HostingNumber)'
-        WorkspaceName: '$(WorkspaceName)'
-        ResourceGroupName: '$(ResourceGroupName)'
-        ResourceGroupLocation: '$(ResourceGroupLocation)'
-        ServiceConnectionName: '$(ServiceConnectionName)'
+  jobs:
+  - template: ../Pipelines/OnboardCustomer.yml
+    parameters:
+      CustomerName: $[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]
+      HostingNumber: '$(HostingNumber)'
+      WorkspaceName: '$(WorkspaceName)'
+      ResourceGroupName: '$(ResourceGroupName)'
+      ResourceGroupLocation: '$(ResourceGroupLocation)'
+      ServiceConnectionName: '$(ServiceConnectionName)'
 
 - stage: C
   displayName: 'Clean up onboarding files'
