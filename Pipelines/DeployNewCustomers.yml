@@ -67,12 +67,12 @@ stages:
   jobs:
     - template: ../Pipelines/OnboardCustomer.yml
       parameters:
-        CustomerName: $(CustomerName)
-        HostingNumber: $(HostingNumber)
-        WorkspaceName: $(WorkspaceName)
-        ResourceGroupName: $(ResourceGroupName)
-        ResourceGroupLocation: $(ResourceGroupLocation)
-        ServiceConnectionName: $(ServiceConnectionName)
+        CustomerName: '$(CustomerName)'
+        HostingNumber: '$(HostingNumber)'
+        WorkspaceName: '$(WorkspaceName)'
+        ResourceGroupName: '$(ResourceGroupName)'
+        ResourceGroupLocation: '$(ResourceGroupLocation)'
+        ServiceConnectionName: '$(ServiceConnectionName)'
 
 - stage: C
   displayName: 'Clean up onboarding files'
