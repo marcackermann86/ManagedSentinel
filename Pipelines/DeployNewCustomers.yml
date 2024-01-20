@@ -80,7 +80,15 @@ stages:
         inputs:
           targetType: inline
           script: |
-            echo "CustomerName = $(CustomerName)"
+            echo "CustomerName = $(CustomerName0)"
+            echo "CustomerName = $(CustomerName1)"
+            echo "CustomerName = $(CustomerName2)"
+            echo "CustomerName = $(CustomerName3)"
+            echo "CustomerName = $(CustomerName4)"
+            echo "CustomerName = $(CustomerName5)"
+            echo "CustomerName = $(CustomerName6)"
+            echo "CustomerName = $(CustomerName7)"
+            echo "CustomerName = $(CustomerName8)"
             echo "HostingNumber = $(HostingNumber)"
             echo "WorkspaceName = $(WorkspaceName)"
             echo "ResourceGroupName = $(ResourceGroupName)"
@@ -119,7 +127,24 @@ stages:
         inputs:
           targetType: inline
           script: |
-            echo "CustomerName = $(CustomerName)"
+            echo "CustomerName = $(CustomerName0)"
+            echo "CustomerName = $(CustomerName1)"
+            echo "CustomerName = $(CustomerName2)"
+            echo "CustomerName = $(CustomerName3)"
+            echo "CustomerName = $(CustomerName4)"
+            echo "CustomerName = $(CustomerName5)"
+            echo "CustomerName = $(CustomerName6)"
+            echo "CustomerName = $(CustomerName7)"
+            echo "CustomerName = $(CustomerName8)"
+            echo "CustomerName = $(CustomerName10)"
+            echo "CustomerName = $(CustomerName11)"
+            echo "CustomerName = $(CustomerName12)"
+            echo "CustomerName = $(CustomerName13)"
+            echo "CustomerName = $(CustomerName14)"
+            echo "CustomerName = $(CustomerName15)"
+            echo "CustomerName = $(CustomerName16)"
+            echo "CustomerName = $(CustomerName17)"
+            echo "CustomerName = $(CustomerName18)"
             echo "HostingNumber = $(HostingNumber)"
             echo "WorkspaceName = $(WorkspaceName)"
             echo "ResourceGroupName = $(ResourceGroupName)"
