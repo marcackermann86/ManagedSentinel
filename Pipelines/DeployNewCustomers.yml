@@ -67,7 +67,7 @@ stages:
   jobs:
   - template: ../Pipelines/OnboardCustomer.yml
     parameters:
-      CustomerName: "$[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]"
+      CustomerName: CustomerName
       HostingNumber: '$(HostingNumber)'
       WorkspaceName: '$(WorkspaceName)'
       ResourceGroupName: '$(ResourceGroupName)'
