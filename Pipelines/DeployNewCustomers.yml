@@ -73,6 +73,30 @@ stages:
             targetType: 'inline'
             script: |
               echo $(CustomerName)
+        - task: PowerShell@2
+          displayName: 'Prepare powershell environemnt'
+          inputs:
+            targetType: 'Inline'
+            script: |
+              Install-Module AzSentinelTools -Scope CurrentUser -AllowClobber -Force
+              Import-Module AzSentinelTools
+            pwsh: true
+        - task: AzurePowerShell@4
+          displayName: 'Deploy resource group for Sentinel workspace'
+          inputs:
+            azureSubscription: ${{ parameters.ServiceConnectionName }}
+            ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployResourceGroup.ps1'
+            ScriptArguments: '-Name $(ResourceGroupName) -Location $(ResourceGroupLocation) -Tag @{H="$(HostingNumber)"}'
+            azurePowerShellVersion: LatestVersion
+            pwsh: true
+        - task: AzurePowerShell@4
+          displayName: 'Deploy log analytics workspace for Sentinel'
+          inputs:
+            azureSubscription: ${{ parameters.ServiceConnectionName }}
+            ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployLogAnalyticsWorkspace.ps1'
+            ScriptArguments: '-Location $(ResourceGroupLocation) -Name $(WorkspaceName) -ResourceGroupName $(ResourceGroupName) -Tag @{H="$(HostingNumber)"}'
+            azurePowerShellVersion: LatestVersion
+            pwsh: true
 
 - stage: C
   displayName: 'Clean up onboarding files'
