@@ -84,7 +84,7 @@ stages:
         - task: AzurePowerShell@4
           displayName: 'Deploy resource group for Sentinel workspace'
           inputs:
-            azureSubscription: ${{ parameters.ServiceConnectionName }}
+            azureSubscription: $(ServiceConnectionName)
             ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployResourceGroup.ps1'
             ScriptArguments: '-Name $(ResourceGroupName) -Location $(ResourceGroupLocation) -Tag @{H="$(HostingNumber)"}'
             azurePowerShellVersion: LatestVersion
@@ -92,7 +92,7 @@ stages:
         - task: AzurePowerShell@4
           displayName: 'Deploy log analytics workspace for Sentinel'
           inputs:
-            azureSubscription: ${{ parameters.ServiceConnectionName }}
+            azureSubscription: $(ServiceConnectionName)
             ScriptPath: '$(Pipeline.Workspace)/s/Scripts/DeployLogAnalyticsWorkspace.ps1'
             ScriptArguments: '-Location $(ResourceGroupLocation) -Name $(WorkspaceName) -ResourceGroupName $(ResourceGroupName) -Tag @{H="$(HostingNumber)"}'
             azurePowerShellVersion: LatestVersion
