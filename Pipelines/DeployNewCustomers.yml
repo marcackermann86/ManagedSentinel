@@ -58,12 +58,18 @@ stages:
   dependsOn:
     - A
   variables:
-    CustomerName: $[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]
-    HostingNumber: $[ stageDependencies.A.A1.outputs['SetVars.HostingNumber'] ]
-    WorkspaceName: $[ stageDependencies.A.A1.outputs['SetVars.WorkspaceName'] ]
-    ResourceGroupName: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupName'] ]
-    ResourceGroupLocation: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupLocation'] ]
-    ServiceConnectionName: $[ stageDependencies.A.A1.outputs['SetVars.ServiceConnectionName'] ]
+    - name: CustomerName
+      value: $[ stageDependencies.A.A1.outputs['SetVars.CustomerName'] ]
+    - name: HostingNumber
+      value: $[ stageDependencies.A.A1.outputs['SetVars.HostingNumber'] ]
+    - name: WorkspaceName
+      value: $[ stageDependencies.A.A1.outputs['SetVars.WorkspaceName'] ]
+    - name: ResourceGroupName
+      value: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupName'] ]
+    - name: ResourceGroupLocation
+      value: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupLocation'] ]
+    - name: ServiceConnectionName
+      value: $[ stageDependencies.A.A1.outputs['SetVars.ServiceConnectionName'] ]
   jobs:
   - deployment: '$(CustomerName)_Sentinel'
     displayName: DeploySentinelSolution
