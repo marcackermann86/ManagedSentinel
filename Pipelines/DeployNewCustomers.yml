@@ -65,7 +65,7 @@ stages:
     ResourceGroupLocation: $[ stageDependencies.A.A1.outputs['SetVars.ResourceGroupLocation'] ]
     ServiceConnectionName: $[ stageDependencies.A.A1.outputs['SetVars.ServiceConnectionName'] ]
   jobs:
-  - deployment: '$(CustomerName)_Sentinel'
+  - deployment: 'Customer_Sentinel'
     displayName: DeploySentinelSolution
     pool:
       name: Azure Pipelines
